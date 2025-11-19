@@ -33,6 +33,10 @@ export default function Layout({ children }: LayoutProps) {
     { name: '统计分析', href: '/analytics', icon: BarChart3 },
     { name: '个人中心', href: '/profile', icon: User },
     { name: '设置', href: '/settings', icon: Settings },
+    { name: '订阅计划', href: '/subscription', icon: BarChart3 },
+    { name: '原文', href: '/original', icon: FileText },
+    { name: '总结', href: '/summary', icon: FileText },
+    { name: '思维导图', href: '/mindmap', icon: FileText },
   ];
 
   const handleLogout = async () => {
@@ -97,7 +101,7 @@ export default function Layout({ children }: LayoutProps) {
                   className={`
                     group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors
                     ${isActive(item.href)
-                      ? 'bg-blue-100 text-blue-900 border-r-2 border-blue-600'
+                      ? 'bg-blue-50 text-blue-900 border-l-4 border-blue-600'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                     }
                   `}

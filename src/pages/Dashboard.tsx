@@ -1,8 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Upload, File, Video, Headphones, FileText, Plus, FolderPlus } from 'lucide-react';
+import uploadPng from '../../上传.png';
+import newFolderPng from '../../新建文件夹.png';
 import { useUserStore, useTaskStore } from '../store';
 import { createTask } from '../services/task';
 import { initFileUpload, uploadChunk, completeFileUpload, calculateMD5, splitFileIntoChunks } from '../services/upload';
@@ -62,6 +64,8 @@ export default function Dashboard() {
     },
     maxSize: 3 * 1024 * 1024 * 1024, // 3GB
   });
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const getFileType = (mimeType: string): 'audio' | 'video' | 'document' => {
     if (mimeType.startsWith('audio/')) return 'audio';
@@ -207,9 +211,9 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
               onClick={() => document.getElementById('file-input')?.click()}
-              className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm border-2 border-dashed border-gray-300 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+              className="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border-2 border-dashed border-gray-300 hover:border-blue-400 hover:bg-blue-50 transition-colors"
             >
-              <Upload className="w-8 h-8 text-gray-400 mr-3" />
+              <img src={uploadPng} alt="上传" className="w-8 h-8 mr-3" />
               <div className="text-left">
                 <h3 className="font-medium text-gray-900">上传文件</h3>
                 <p className="text-sm text-gray-500">支持音频、视频、文档</p>
@@ -218,7 +222,7 @@ export default function Dashboard() {
             
             <button
               onClick={() => navigate('/tasks/new')}
-              className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
             >
               <Plus className="w-8 h-8 text-blue-500 mr-3" />
               <div className="text-left">
@@ -229,9 +233,9 @@ export default function Dashboard() {
             
             <button
               onClick={() => navigate('/folders/new')}
-              className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
             >
-              <FolderPlus className="w-8 h-8 text-green-500 mr-3" />
+              <img src={newFolderPng} alt="新建文件夹" className="w-8 h-8 mr-3" />
               <div className="text-left">
                 <h3 className="font-medium text-gray-900">新建文件夹</h3>
                 <p className="text-sm text-gray-500">整理您的文件</p>
@@ -250,7 +254,7 @@ export default function Dashboard() {
               isDragActive ? "border-blue-400 bg-blue-50" : "border-gray-300 hover:border-blue-400"
             )}
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} ref={fileInputRef} id="file-input" />
             <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             {isDragActive ? (
               <p className="text-blue-600 font-medium">释放文件以上传</p>

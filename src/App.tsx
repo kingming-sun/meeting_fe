@@ -7,6 +7,13 @@ import Dashboard from './pages/Dashboard';
 import TaskList from './pages/TaskList';
 import TaskDetail from './pages/TaskDetail';
 import UserProfile from './pages/UserProfile';
+import Files from './pages/Files';
+import Analytics from './pages/Analytics';
+import Settings from './pages/Settings';
+import Subscription from './pages/Subscription';
+import Summary from './pages/Summary';
+import OriginalText from './pages/OriginalText';
+import Mindmap from './pages/Mindmap';
 import Layout from './components/Layout';
 
 // Protected Route component
@@ -84,6 +91,62 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <UserProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/files"
+            element={
+              <ProtectedRoute>
+                <Files />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <Analytics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/subscription"
+            element={
+              <ProtectedRoute>
+                <Subscription />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/summary"
+            element={
+              <ProtectedRoute>
+                <Summary />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/original"
+            element={
+              <ProtectedRoute>
+                <OriginalText />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mindmap"
+            element={
+              <ProtectedRoute>
+                <Mindmap />
               </ProtectedRoute>
             }
           />
