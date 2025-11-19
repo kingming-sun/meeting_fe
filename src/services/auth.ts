@@ -9,7 +9,10 @@ export type { LoginRequest, LoginResponse, RegisterRequest, PublicKeyResponse };
 let publicKey: string = '';
 let publicKeyExpireAt: number = 0;
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
+const USE_MOCK = (
+  import.meta.env.VITE_USE_MOCK === 'true' ||
+  (typeof window !== 'undefined' && /vercel\.app$/.test(window.location.hostname))
+);
 
 export const getPublicKey = async (): Promise<string> => {
   const now = Math.floor(Date.now() / 1000);
