@@ -181,93 +181,72 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">TransNote AI</h1>
-              <span className="ml-3 text-sm text-gray-500">智能语音识别平台</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">欢迎，{user?.username}</span>
-              <button
-                onClick={() => navigate('/tasks')}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                我的任务
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div className="w-full">
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
         {/* Quick Actions */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">快速开始</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mb-6 md:mb-8">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">快速开始</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             <button
               onClick={() => document.getElementById('file-input')?.click()}
-              className="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border-2 border-dashed border-gray-300 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+              className="flex items-center justify-center p-4 md:p-6 bg-white rounded-xl shadow-sm border-2 border-dashed border-gray-300 hover:border-blue-400 hover:bg-blue-50 transition-colors"
             >
-              <img src={uploadPng} alt="上传" className="w-8 h-8 mr-3" />
+              <img src={uploadPng} alt="上传" className="w-6 h-6 md:w-8 md:h-8 mr-3 flex-shrink-0" />
               <div className="text-left">
-                <h3 className="font-medium text-gray-900">上传文件</h3>
-                <p className="text-sm text-gray-500">支持音频、视频、文档</p>
+                <h3 className="text-sm md:text-base font-medium text-gray-900">上传文件</h3>
+                <p className="text-xs md:text-sm text-gray-500">支持音频、视频、文档</p>
               </div>
             </button>
             
             <button
               onClick={() => navigate('/tasks/new')}
-              className="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-center p-4 md:p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
             >
-              <Plus className="w-8 h-8 text-blue-500 mr-3" />
+              <Plus className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mr-3 flex-shrink-0" />
               <div className="text-left">
-                <h3 className="font-medium text-gray-900">新建任务</h3>
-                <p className="text-sm text-gray-500">创建转录任务</p>
+                <h3 className="text-sm md:text-base font-medium text-gray-900">新建任务</h3>
+                <p className="text-xs md:text-sm text-gray-500">创建转录任务</p>
               </div>
             </button>
             
             <button
               onClick={() => navigate('/folders/new')}
-              className="flex items-center justify-center p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-center p-4 md:p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors"
             >
-              <img src={newFolderPng} alt="新建文件夹" className="w-8 h-8 mr-3" />
+              <img src={newFolderPng} alt="新建文件夹" className="w-6 h-6 md:w-8 md:h-8 mr-3 flex-shrink-0" />
               <div className="text-left">
-                <h3 className="font-medium text-gray-900">新建文件夹</h3>
-                <p className="text-sm text-gray-500">整理您的文件</p>
+                <h3 className="text-sm md:text-base font-medium text-gray-900">新建文件夹</h3>
+                <p className="text-xs md:text-sm text-gray-500">整理您的文件</p>
               </div>
             </button>
           </div>
         </div>
 
         {/* File Upload Area */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">文件上传</h2>
+        <div className="mb-6 md:mb-8">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">文件上传</h2>
           <div
             {...getRootProps()}
             className={cn(
-              "border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors",
+              "border-2 border-dashed rounded-lg p-6 md:p-8 text-center cursor-pointer transition-colors",
               isDragActive ? "border-blue-400 bg-blue-50" : "border-gray-300 hover:border-blue-400"
             )}
           >
             <input {...getInputProps()} ref={fileInputRef} id="file-input" />
-            <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <Upload className="w-10 h-10 md:w-12 md:h-12 text-gray-400 mx-auto mb-3 md:mb-4" />
             {isDragActive ? (
-              <p className="text-blue-600 font-medium">释放文件以上传</p>
+              <p className="text-sm md:text-base text-blue-600 font-medium">释放文件以上传</p>
             ) : (
               <div>
-                <p className="text-gray-600 mb-2">拖拽文件到此处，或</p>
+                <p className="text-sm md:text-base text-gray-600 mb-2">拖拽文件到此处，或</p>
                 <button
                   type="button"
-                  className="text-blue-600 font-medium hover:text-blue-500"
+                  className="text-sm md:text-base text-blue-600 font-medium hover:text-blue-500"
                 >
                   点击选择文件
                 </button>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-xs md:text-sm text-gray-500 mt-2">
                   支持音频、视频、PDF、文本文件，最大3GB
                 </p>
               </div>
@@ -277,28 +256,30 @@ export default function Dashboard() {
 
         {/* Uploaded Files */}
         {uploadedFiles.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">上传的文件</h2>
+          <div className="mb-6 md:mb-8">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">上传的文件</h2>
             <div className="bg-white rounded-lg shadow-sm border border-gray-200">
               {uploadedFiles.map((file) => (
-                <div key={file.id} className="p-4 border-b border-gray-200 last:border-b-0">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      {getFileIconComponent(file.type)}
-                      <div className="ml-4">
-                        <h4 className="text-sm font-medium text-gray-900">{file.file.name}</h4>
-                        <p className="text-sm text-gray-500">{file.size}</p>
+                <div key={file.id} className="p-3 md:p-4 border-b border-gray-200 last:border-b-0">
+                  <div className="flex items-start md:items-center justify-between flex-col md:flex-row gap-3 md:gap-0">
+                    <div className="flex items-center min-w-0 flex-1">
+                      <div className="flex-shrink-0">
+                        {getFileIconComponent(file.type)}
+                      </div>
+                      <div className="ml-3 md:ml-4 min-w-0 flex-1">
+                        <h4 className="text-sm font-medium text-gray-900 truncate">{file.file.name}</h4>
+                        <p className="text-xs md:text-sm text-gray-500">{file.size}</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(file.status)}`}>
+                    <div className="flex items-center space-x-3 md:space-x-4 self-end md:self-auto">
+                      <span className={`px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap ${getStatusColor(file.status)}`}>
                         {file.status === 'completed' && '已完成'}
                         {file.status === 'uploading' && '上传中'}
                         {file.status === 'error' && '上传失败'}
                         {file.status === 'pending' && '等待中'}
                       </span>
                       {file.status === 'uploading' && (
-                        <div className="w-24 bg-gray-200 rounded-full h-2">
+                        <div className="w-20 md:w-24 bg-gray-200 rounded-full h-2">
                           <div
                             className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${file.uploadProgress}%` }}
@@ -315,26 +296,26 @@ export default function Dashboard() {
 
         {/* Quick Task Creation */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">快速创建任务</h2>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center space-x-4">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">快速创建任务</h2>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <input
                 type="text"
                 value={taskName}
                 onChange={(e) => setTaskName(e.target.value)}
                 placeholder="输入任务名称"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
               />
               <button
                 onClick={handleCreateTask}
                 disabled={isCreatingTask || !taskName.trim()}
                 className={cn(
-                  "px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+                  "px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap text-sm md:text-base",
                   (isCreatingTask || !taskName.trim()) && "opacity-50 cursor-not-allowed"
                 )}
               >
                 {isCreatingTask ? (
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-center">
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                     创建中...
                   </div>

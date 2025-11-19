@@ -178,66 +178,68 @@ export default function TaskDetail() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
+      <div className="mb-6 md:mb-8">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          <div className="flex items-start min-w-0 flex-1">
             <button
               onClick={() => navigate('/tasks')}
-              className="mr-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg"
+              className="mr-3 md:mr-4 p-1.5 md:p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg flex-shrink-0"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">{currentTask.taskName}</h1>
-              <p className="text-gray-600 mt-1">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-xl md:text-2xl font-bold text-gray-900 truncate">{currentTask.taskName}</h1>
+              <p className="text-xs md:text-sm text-gray-600 mt-1">
                 创建于 {formatDate(currentTask.createdAt)} · 
                 {currentTask.fileList?.length || 0} 个文件
               </p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
             <button
               onClick={loadTask}
-              className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-3 py-2 border border-gray-300 text-xs md:text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap"
             >
-              <RefreshCw className="w-4 h-4 mr-1" />
+              <RefreshCw className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1" />
               刷新
             </button>
             <button
               onClick={() => {/* Handle share */}}
-              className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-3 py-2 border border-gray-300 text-xs md:text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 whitespace-nowrap"
             >
-              <Share className="w-4 h-4 mr-1" />
+              <Share className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1" />
               分享
             </button>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
         {/* Files Section */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">文件列表</h2>
+            <div className="p-4 md:p-6 border-b border-gray-200">
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">文件列表</h2>
             </div>
             <div className="divide-y divide-gray-200">
               {currentTask.fileList?.map((file) => (
-                <div key={file.fileId} className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      {getFileIconComponent(file.fileType)}
-                      <div className="ml-3">
-                        <h4 className="text-sm font-medium text-gray-900">{file.fileName}</h4>
-                        <p className="text-xs text-gray-500">
+                <div key={file.fileId} className="p-3 md:p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start min-w-0 flex-1">
+                      <div className="flex-shrink-0">
+                        {getFileIconComponent(file.fileType)}
+                      </div>
+                      <div className="ml-3 min-w-0 flex-1">
+                        <h4 className="text-sm font-medium text-gray-900 truncate">{file.fileName}</h4>
+                        <p className="text-xs text-gray-500 truncate">
                           {formatFileSize(file.fileSize)} · {file.fileType}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
                       <button
                         onClick={() => handleTranscribe(file)}
                         className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg"
@@ -261,18 +263,18 @@ export default function TaskDetail() {
         </div>
 
         {/* Transcription Results */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 md:space-y-6">
           {/* Original Transcription */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-900">原始转录</h2>
+            <div className="p-4 md:p-6 border-b border-gray-200">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <h2 className="text-base md:text-lg font-semibold text-gray-900">原始转录</h2>
                 <button
                   onClick={handleRepairText}
                   disabled={!transcription || isProcessing}
-                  className="inline-flex items-center px-3 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 disabled:opacity-50"
+                  className="inline-flex items-center px-3 py-2 border border-blue-300 text-xs md:text-sm font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 disabled:opacity-50 whitespace-nowrap"
                 >
-                  <Edit className="w-4 h-4 mr-1" />
+                  <Edit className="w-3.5 h-3.5 md:w-4 md:h-4 mr-1" />
                   修复文本
                 </button>
               </div>

@@ -13,6 +13,32 @@ const USE_MOCK = (
   import.meta.env.VITE_USE_MOCK === 'true' ||
   (typeof window !== 'undefined' && /vercel\.app$/.test(window.location.hostname))
 );
+const isDev = !!import.meta.env.DEV;
+function mockLoginResult(username: string): LoginResponse {
+  const accessToken = 'mock_access_token';
+  const refreshToken = 'mock_refresh_token';
+  const userInfo = {
+    userId: 'mock_user',
+    username: username || 'mock',
+    tag: 1,
+    totalDur: 3600,
+    remainDur: 3600,
+    totalSpace: 1000,
+    remainSpace: 1000,
+    taskValidity: 3,
+  };
+  Cookies.set('access_token', accessToken, {
+    expires: new Date(Date.now() + 4 * 60 * 60 * 1000),
+    secure: true,
+    sameSite: 'strict',
+  });
+  Cookies.set('refresh_token', refreshToken, {
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    secure: true,
+    sameSite: 'strict',
+  });
+  return { accessToken, refreshToken, userInfo } as LoginResponse;
+}
 
 export const getPublicKey = async (): Promise<string> => {
   const now = Math.floor(Date.now() / 1000);
@@ -53,32 +79,7 @@ export const encryptPassword = async (password: string): Promise<string> => {
 export const login = async (credentials: LoginRequest): Promise<LoginResponse> => {
   try {
     if (USE_MOCK) {
-      const accessToken = 'mock_access_token';
-      const refreshToken = 'mock_refresh_token';
-      const userInfo = {
-        userId: 'mock_user',
-        username: credentials.username || 'mock',
-        tag: 1,
-        totalDur: 3600,
-        remainDur: 3600,
-        totalSpace: 1000,
-        remainSpace: 1000,
-        taskValidity: 3,
-      };
-
-      Cookies.set('access_token', accessToken, {
-        expires: new Date(Date.now() + 4 * 60 * 60 * 1000),
-        secure: true,
-        sameSite: 'strict',
-      });
-
-      Cookies.set('refresh_token', refreshToken, {
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        secure: true,
-        sameSite: 'strict',
-      });
-
-      return { accessToken, refreshToken, userInfo };
+      return mockLoginResult(credentials.username);
     }
     // Encrypt password before sending
     const encryptedPassword = await encryptPassword(credentials.password);
@@ -105,6 +106,9 @@ export const login = async (credentials: LoginRequest): Promise<LoginResponse> =
 
     return { accessToken, refreshToken, userInfo };
   } catch (error) {
+    if (isDev) {
+      return mockLoginResult(credentials.username);
+    }
     console.error('Login failed:', error);
     throw error;
   }
@@ -130,6 +134,14 @@ export const register = async (userData: RegisterRequest): Promise<any> => {
 
     return response.data.data;
   } catch (error) {
+    if (isDev) {
+      return {
+        userId: 'mock_user',
+        username: userData.username || 'mock',
+        email: userData.email,
+        tag: 1,
+      };
+    }
     console.error('Registration failed:', error);
     throw error;
   }

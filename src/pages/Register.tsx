@@ -98,17 +98,17 @@ export default function Register() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4">
-            <User className="w-8 h-8 text-white" />
+        <div className="text-center mb-6 md:mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-blue-600 rounded-full mb-3 md:mb-4">
+            <User className="w-7 h-7 md:w-8 md:h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">TransNote AI</h1>
-          <p className="text-gray-600">创建您的账户</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1 md:mb-2">TransNote AI</h1>
+          <p className="text-sm md:text-base text-gray-600">创建您的账户</p>
         </div>
 
         {/* Register Form */}
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
                 用户名
@@ -136,7 +136,7 @@ export default function Register() {
                   type="text"
                   id="username"
                   className={cn(
-                    "block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                    "block w-full pl-10 pr-3 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                     errors.username && "border-red-300"
                   )}
                   placeholder="请输入用户名"
@@ -346,9 +346,9 @@ export default function Register() {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center text-sm text-gray-500">
+        <div className="mt-6 md:mt-8 text-center text-xs md:text-sm text-gray-500">
           <p>注册即表示您同意我们的</p>
-          <div className="flex justify-center space-x-4 mt-1">
+          <div className="flex justify-center space-x-3 md:space-x-4 mt-1">
             <Link to="/terms" className="text-blue-600 hover:text-blue-500">服务条款</Link>
             <span>和</span>
             <Link to="/privacy" className="text-blue-600 hover:text-blue-500">隐私政策</Link>

@@ -79,17 +79,17 @@ export default function TaskList() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">任务管理</h1>
-            <p className="mt-2 text-gray-600">管理和查看您的转录任务</p>
+      <div className="mb-6 md:mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 truncate">任务管理</h1>
+            <p className="mt-1 md:mt-2 text-sm md:text-base text-gray-600">管理和查看您的转录任务</p>
           </div>
           <button
             onClick={() => navigate('/dashboard')}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap"
           >
             <Plus className="w-4 h-4 mr-2" />
             新建任务
@@ -129,55 +129,55 @@ export default function TaskList() {
       </div>
 
       {/* Task Statistics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FileText className="w-6 h-6 text-blue-600" />
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">总任务数</p>
-              <p className="text-2xl font-bold text-gray-900">{tasks.length}</p>
+            <div className="ml-3 md:ml-4 min-w-0">
+              <p className="text-xs md:text-sm font-medium text-gray-600 truncate">总任务数</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">{tasks.length}</p>
             </div>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <Clock className="w-6 h-6 text-yellow-600" />
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Clock className="w-5 h-5 md:w-6 md:h-6 text-yellow-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">处理中</p>
-              <p className="text-2xl font-bold text-gray-900">
+            <div className="ml-3 md:ml-4 min-w-0">
+              <p className="text-xs md:text-sm font-medium text-gray-600 truncate">处理中</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">
                 {tasks.filter(t => t.taskStatus === 'processing').length}
               </p>
             </div>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <FileText className="w-6 h-6 text-green-600" />
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5 md:w-6 md:h-6 text-green-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">已完成</p>
-              <p className="text-2xl font-bold text-gray-900">
+            <div className="ml-3 md:ml-4 min-w-0">
+              <p className="text-xs md:text-sm font-medium text-gray-600 truncate">已完成</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">
                 {tasks.filter(t => t.taskStatus === 'completed').length}
               </p>
             </div>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6">
           <div className="flex items-center">
-            <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-              <Trash2 className="w-6 h-6 text-red-600" />
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Trash2 className="w-5 h-5 md:w-6 md:h-6 text-red-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">失败/过期</p>
-              <p className="text-2xl font-bold text-gray-900">
+            <div className="ml-3 md:ml-4 min-w-0">
+              <p className="text-xs md:text-sm font-medium text-gray-600 truncate">失败/过期</p>
+              <p className="text-xl md:text-2xl font-bold text-gray-900">
                 {tasks.filter(t => t.taskStatus === 'failed' || t.taskStatus === 'expired').length}
               </p>
             </div>
@@ -208,61 +208,58 @@ export default function TaskList() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="divide-y divide-gray-200">
             {filteredTasks.map((task) => (
-              <div key={task.taskId} className="p-6 hover:bg-gray-50 transition-colors">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <div key={task.taskId} className="p-4 md:p-6 hover:bg-gray-50 transition-colors">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                  <div className="flex items-start space-x-3 md:space-x-4 min-w-0 flex-1">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                       {getTaskIcon(task)}
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-medium text-gray-900 mb-1">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base md:text-lg font-medium text-gray-900 mb-1 truncate">
                         {task.taskName}
                       </h3>
-                      <div className="flex items-center space-x-4 text-sm text-gray-500">
-                        <div className="flex items-center">
-                          <Calendar className="w-4 h-4 mr-1" />
-                          {formatDate(task.createdAt)}
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs md:text-sm text-gray-500">
+                        <div className="flex items-center whitespace-nowrap">
+                          <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1 flex-shrink-0" />
+                          <span className="truncate">{formatDate(task.createdAt)}</span>
                         </div>
-                        <div className="flex items-center">
-                          <Clock className="w-4 h-4 mr-1" />
-                          过期时间: {new Date(task.expireAt * 1000).toLocaleDateString()}
+                        <div className="flex items-center whitespace-nowrap">
+                          <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1 flex-shrink-0" />
+                          <span className="truncate">过期: {new Date(task.expireAt * 1000).toLocaleDateString()}</span>
                         </div>
-                        <div className="flex items-center">
-                          <FileText className="w-4 h-4 mr-1" />
+                        <div className="flex items-center whitespace-nowrap">
+                          <FileText className="w-3 h-3 md:w-4 md:h-4 mr-1 flex-shrink-0" />
                           {task.fileList?.length || 0} 个文件
                         </div>
-                        <div className="flex items-center">
-                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${getTaskStatusColor(task.taskStatus)}`}>
-                            {getTaskStatusText(task.taskStatus)}
-                          </span>
-                        </div>
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap ${getTaskStatusColor(task.taskStatus)}`}>
+                          {getTaskStatusText(task.taskStatus)}
+                        </span>
                       </div>
+                      {task.taskSize > 0 && (
+                        <div className="mt-2 text-xs md:text-sm text-gray-500">
+                          <span>任务大小: {formatDuration(task.taskSize)}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 self-end lg:self-auto flex-shrink-0">
                     <button
                       onClick={() => navigate(`/tasks/${task.taskId}`)}
-                      className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                      className="inline-flex items-center px-3 py-2 border border-gray-300 text-xs md:text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                     >
-                      <Eye className="w-4 h-4 mr-1" />
+                      <Eye className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                       查看
                     </button>
                     <button
                       onClick={() => handleDeleteTask(task.taskId)}
-                      className="inline-flex items-center px-3 py-2 border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50"
+                      className="inline-flex items-center px-3 py-2 border border-red-300 text-xs md:text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50"
                     >
-                      <Trash2 className="w-4 h-4 mr-1" />
+                      <Trash2 className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                       删除
                     </button>
                   </div>
                 </div>
-                
-                {task.taskSize > 0 && (
-                  <div className="mt-3 flex items-center text-sm text-gray-500">
-                    <span>任务大小: {formatDuration(task.taskSize)}</span>
-                  </div>
-                )}
               </div>
             ))}
           </div>
