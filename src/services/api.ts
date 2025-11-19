@@ -38,6 +38,7 @@ api.interceptors.response.use(
       // Handle token expiration
       Cookies.remove('access_token');
       Cookies.remove('refresh_token');
+      localStorage.removeItem('user_info');
       window.location.href = '/login';
     }
     return Promise.reject(error);

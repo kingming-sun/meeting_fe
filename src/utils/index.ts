@@ -59,9 +59,46 @@ export function getFileIcon(fileType: string): string {
   return '📎';
 }
 
+/**
+ * 任务状态码定义（与后端接口文档一致）
+ * -2: 任务异常
+ * -1: 任务已过期
+ *  0: 任务已创建
+ *  1: 任务完成
+ */
+export enum TaskStatus {
+  FAILED = -2,
+  EXPIRED = -1,
+  CREATED = 0,
+  COMPLETED = 1,
+}
+
+// 将后端状态码转换为前端显示用的字符串
+export function mapTaskStatusToString(statusCode: number | string): string {
+  const code = typeof statusCode === 'string' ? parseInt(statusCode) : statusCode;
+  
+  switch (code) {
+    case TaskStatus.COMPLETED:
+    case 1:
+      return 'completed';
+    case TaskStatus.EXPIRED:
+    case -1:
+      return 'expired';
+    case TaskStatus.FAILED:
+    case -2:
+      return 'failed';
+    case TaskStatus.CREATED:
+    case 0:
+    default:
+      return 'pending';
+  }
+}
+
 // Get task status color
-export function getTaskStatusColor(status: string): string {
-  switch (status) {
+export function getTaskStatusColor(status: string | number): string {
+  const statusStr = typeof status === 'number' ? mapTaskStatusToString(status) : status;
+  
+  switch (statusStr) {
     case 'completed':
       return 'text-green-600 bg-green-100';
     case 'processing':
@@ -70,24 +107,28 @@ export function getTaskStatusColor(status: string): string {
       return 'text-red-600 bg-red-100';
     case 'expired':
       return 'text-gray-600 bg-gray-100';
+    case 'pending':
     default:
       return 'text-yellow-600 bg-yellow-100';
   }
 }
 
 // Get task status text
-export function getTaskStatusText(status: string): string {
-  switch (status) {
+export function getTaskStatusText(status: string | number): string {
+  const statusStr = typeof status === 'number' ? mapTaskStatusToString(status) : status;
+  
+  switch (statusStr) {
     case 'completed':
       return '已完成';
     case 'processing':
       return '处理中';
     case 'failed':
-      return '失败';
+      return '任务异常';
     case 'expired':
       return '已过期';
+    case 'pending':
     default:
-      return '待处理';
+      return '已创建';
   }
 }
 

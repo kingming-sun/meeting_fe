@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { User, Mail, Globe, Calendar, Save, Edit3 } from 'lucide-react';
+import { User, Mail, Calendar, Save, Edit3 } from 'lucide-react';
 import { useUserStore } from '../store';
 import { formatDate, cn } from '../utils';
+import { updateUserProfile } from '../services/auth';
 
 interface ProfileForm {
   username: string;
@@ -47,19 +48,33 @@ export default function UserProfile() {
     setIsLoading(true);
     
     try {
-      // API call to update profile would go here
-      // For now, we'll just update the local store
+      // 调用后端API更新用户信息
+      const response = await updateUserProfile({
+        username: data.username,
+        email: data.email,
+        zone: data.zone,
+        birthday: data.birthday,
+        gender: data.gender,
+        des: data.des,
+      });
+      
+      // 更新本地store
       const updatedUser = {
         ...user,
-        ...data,
+        ...response,
       };
       
       setUser(updatedUser);
+      
+      // 更新localStorage中的用户信息
+      localStorage.setItem('user_info', JSON.stringify(updatedUser));
+      
       setIsEditing(false);
       toast.success('个人信息更新成功');
     } catch (error) {
       console.error('Profile update failed:', error);
-      toast.error('个人信息更新失败');
+      const errorMessage = (error as { response?: { data?: { msg?: string } } }).response?.data?.msg || '个人信息更新失败';
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }

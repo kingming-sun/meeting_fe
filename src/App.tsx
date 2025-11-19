@@ -1,8 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Toaster } from 'sonner';
+import Cookies from 'js-cookie';
 import { useUserStore } from './store';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import Dashboard from './pages/Dashboard';
 import TaskList from './pages/TaskList';
 import TaskDetail from './pages/TaskDetail';
@@ -39,6 +42,28 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const setAuth = useUserStore((state) => state.setAuth);
+  const setUser = useUserStore((state) => state.setUser);
+
+  // 初始化：检查 Cookies 中是否有 token
+  useEffect(() => {
+    const accessToken = Cookies.get('access_token');
+    if (accessToken) {
+      // 如果有 token，设置为已认证状态
+      setAuth(true);
+      
+      // 尝试从 localStorage 恢复用户信息（如果有的话）
+      const savedUser = localStorage.getItem('user_info');
+      if (savedUser) {
+        try {
+          setUser(JSON.parse(savedUser));
+        } catch (error) {
+          console.error('Failed to parse saved user info:', error);
+        }
+      }
+    }
+  }, [setAuth, setUser]);
+
   return (
     <>
       <Router>
@@ -57,6 +82,14 @@ export default function App() {
             element={
               <PublicRoute>
                 <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
               </PublicRoute>
             }
           />

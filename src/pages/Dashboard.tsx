@@ -74,16 +74,31 @@ export default function Dashboard() {
   };
 
   const handleFileUpload = async (fileId: string, file: File, fileType: 'audio' | 'video' | 'document') => {
+    // 如果没有登录或没有用户信息，不允许上传
+    if (!user) {
+      toast.error('请先登录后再上传文件');
+      setUploadedFiles((prev) => prev.filter((f) => f.id !== fileId));
+      return;
+    }
+
     try {
       setUploadedFiles((prev) =>
         prev.map((f) => (f.id === fileId ? { ...f, status: 'uploading' } : f))
       );
 
+      // 先创建任务（如果还没有任务）
+      // 这里我们为每个文件创建一个任务，或者用户可以手动创建任务后上传
+      // 为了简化，这里先创建一个以文件名命名的任务
+      const newTask = await createTask(user.userId, {
+        taskName: file.name.replace(/\.[^/.]+$/, ''), // 移除文件扩展名
+      });
+
       // Calculate file MD5
+      toast.info('正在计算文件MD5...');
       const fileMd5 = await calculateMD5(file);
 
       // Initialize upload
-      const initResponse = await initFileUpload('temp-task', {
+      const initResponse = await initFileUpload(newTask.taskId, {
         fileName: file.name,
         fileSize: file.size,
         fileType: file.type,
@@ -99,7 +114,7 @@ export default function Dashboard() {
         const chunk = chunks[i];
         const chunkMd5 = await calculateMD5(chunk as File);
         
-        await uploadChunk('temp-task', initResponse.uploadId, i, chunk, chunkMd5);
+        await uploadChunk(newTask.taskId, initResponse.uploadId, i, chunk, chunkMd5);
         
         // Update progress
         const progress = ((i + 1) / chunks.length) * 100;
@@ -109,12 +124,15 @@ export default function Dashboard() {
       }
 
       // Complete upload
-      await completeFileUpload('temp-task', initResponse.uploadId, fileMd5, chunks.length);
+      await completeFileUpload(newTask.taskId, initResponse.uploadId, fileMd5, chunks.length);
 
       setUploadedFiles((prev) =>
         prev.map((f) => (f.id === fileId ? { ...f, status: 'completed', uploadProgress: 100 } : f))
       );
 
+      // 更新任务列表
+      addTask(newTask);
+      
       toast.success(`${file.name} 上传成功`);
     } catch (error) {
       console.error('File upload failed:', error);

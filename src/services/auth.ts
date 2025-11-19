@@ -167,6 +167,7 @@ export const sendEmailCode = async (email: string): Promise<{ countdown: number;
 export const logout = (): void => {
   Cookies.remove('access_token');
   Cookies.remove('refresh_token');
+  localStorage.removeItem('user_info');
   window.location.href = '/login';
 };
 
@@ -178,4 +179,52 @@ export const isAuthenticated = (): boolean => {
 export const getAuthHeaders = (): Record<string, string> => {
   const token = Cookies.get('access_token');
   return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+// Update user profile
+export interface UpdateUserProfileRequest {
+  username?: string;
+  email?: string;
+  emailCode?: string;
+  zone?: string;
+  birthday?: string;
+  gender?: string;
+  des?: string;
+}
+
+export const updateUserProfile = async (data: UpdateUserProfileRequest): Promise<any> => {
+  try {
+    const response = await api.patch<ApiResponse<any>>('/auth/user-profile', data);
+    return response.data.data;
+  } catch (error) {
+    console.error('Failed to update user profile:', error);
+    throw error;
+  }
+};
+
+// Change password
+export interface ChangePasswordRequest {
+  username?: string;
+  email?: string;
+  oriPwd: string;
+  newPwd: string;
+  confirmPwd: string;
+}
+
+export const changePassword = async (data: ChangePasswordRequest): Promise<any> => {
+  try {
+    // Encrypt all passwords
+    const encryptedData = {
+      ...data,
+      oriPwd: await encryptPassword(data.oriPwd),
+      newPwd: await encryptPassword(data.newPwd),
+      confirmPwd: await encryptPassword(data.confirmPwd),
+    };
+    
+    const response = await api.put<ApiResponse<any>>('/auth/user-profile', encryptedData);
+    return response.data.data;
+  } catch (error) {
+    console.error('Failed to change password:', error);
+    throw error;
+  }
 };

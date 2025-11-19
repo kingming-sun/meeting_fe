@@ -40,8 +40,12 @@ export default function Login() {
 
       const response = await login(loginData);
       
+      // 保存用户信息到 store
       setUser(response.userInfo);
       setAuth(true);
+      
+      // 保存用户信息到 localStorage，用于刷新页面后恢复
+      localStorage.setItem('user_info', JSON.stringify(response.userInfo));
       
       toast.success('登录成功！');
       navigate('/dashboard');
